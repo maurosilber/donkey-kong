@@ -1,2 +1,6 @@
 # Monkey-patch luigi
-from .monkey_patching import dependencies, target
+from . import monkey_patching
+
+del monkey_patching
+
+from . import target, invalidation

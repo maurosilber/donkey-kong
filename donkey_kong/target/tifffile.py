@@ -19,7 +19,7 @@ class LocalTiff(LocalTarget):
 
     @property
     def shape(self):
-        return (len(self), *self.tif[0].shape)
+        return (len(self), *self.tif.pages[0].shape)
 
     def __getitem__(self, item):
         if isinstance(item, tuple):
