@@ -1,10 +1,10 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='donkey-kong',
     version='0.0.0',
-    packages=['donkey_kong'],
-    url='https://github.com/maurosilber/sciluigi',
+    packages=find_packages(),
+    url='https://github.com/maurosilber/donkey-kong',
     license='MIT',
     author='Mauro Silberberg',
     author_email='maurosilber@gmail.com',
