@@ -1,6 +1,6 @@
 from collections import defaultdict
 
-from luigi.task import flatten
+from luigi.task import flatten, WrapperTask
 from luigi.tools import deps
 from tabulate import tabulate
 
@@ -43,11 +43,17 @@ def invalidate_downstream(end_task, tasks_to_invalidate):
 
 def invalidate_stats(end_task, tasks_to_invalidate):
     def stats():
-        return [0, 0]
+        return {'complete': 0,
+                'incomplete': 0}
 
     tasks_stats = defaultdict(stats)
     for task in downstream_dependencies(end_task, starting_tasks=tasks_to_invalidate):
-        key = 0 if task.complete() else 1
-        tasks_stats[task.task_family][key] += 1
-    tasks_stats = [(key, *value) for key, value in tasks_stats.items()]
+        if isinstance(task, WrapperTask):
+            continue  # WrapperTasks have no output to delete.
+        if task.complete():
+            tasks_stats[task.task_family]['complete'] += 1
+        else:
+            tasks_stats[task.task_family]['incomplete'] += 1
+
+    tasks_stats = [(key, value['complete'], value['incomplete']) for key, value in tasks_stats.items()]
     return tabulate(tasks_stats, headers=['Task', 'Complete', 'Incomplete'])
