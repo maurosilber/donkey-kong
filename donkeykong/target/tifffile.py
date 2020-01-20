@@ -23,6 +23,15 @@ class LocalTiff(LocalTarget):
 
     def __getitem__(self, item):
         if isinstance(item, tuple):
-            return self.tif.asarray(key=item[0])[item]
+            if isinstance(item[0], int):
+                return self[item[0]][item[1:]]
+            else:
+                return self[item[0]][item]
         else:
-            return self.tif.asarray()[item]
+            out = self.tif.asarray(key=item)
+            if isinstance(item, list) and len(item) == 1:
+                return out[None]  # Add axis
+            elif isinstance(item, slice) and len(range(*item.indices(len(self)))) == 1:
+                return out[None]  # Add axis
+            else:
+                return out
