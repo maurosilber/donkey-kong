@@ -12,4 +12,3 @@ luigi.Target.open = lambda self: self
 luigi.Target.close = lambda self: None
 luigi.Target.__enter__ = lambda self: self.open()
 luigi.Target.__exit__ = lambda self, exc_type, exc_val, exc_tb: self.close()
-luigi.Target.__del__ = lambda self: self.close()

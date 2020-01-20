@@ -1,1 +1,1 @@
-from . import dependencies, target
+from . import dependencies, target, task
