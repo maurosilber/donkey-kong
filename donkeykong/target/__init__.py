@@ -1,3 +1,4 @@
+from .json import LocalJSON
 from .local_target import LocalTarget
 
 
