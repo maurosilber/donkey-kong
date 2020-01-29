@@ -5,7 +5,14 @@ from .local_target import LocalTarget
 
 class LocalNpy(LocalTarget):
     def open(self, mode='r'):
-        return np.load(self.path, mmap_mode=mode)
+        self.npy = np.load(self.path, mmap_mode=mode)
+        return self.npy
+
+    def close(self):
+        try:
+            self.npy._mmap.close()
+        except AttributeError:
+            pass
 
     def save(self, array):
         np.save(self.path, array)
