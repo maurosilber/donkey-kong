@@ -8,6 +8,7 @@ class LocalPandasPickle(LocalTarget):
         return pd.read_pickle(self.path)
 
     def save(self, df):
+        self.makedirs()
         pd.to_pickle(df, self.path)
 
 
@@ -20,4 +21,5 @@ class LocalPandasCSV(LocalTarget):
         return pd.read_csv(self.path, **self.csv_kwargs)
 
     def save(self, df):
+        self.makedirs()
         df.to_csv(self.path, **self.csv_kwargs)

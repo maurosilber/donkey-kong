@@ -15,6 +15,7 @@ class LocalNpy(LocalTarget):
             pass
 
     def save(self, array):
+        self.makedirs()
         np.save(self.path, array)
 
 
@@ -29,4 +30,5 @@ class LocalNpz(LocalTarget):
         self.npz.close()
 
     def save(self, *args, **kwargs):
+        self.makedirs()
         np.savez(self.path, *args, **kwargs)

@@ -9,5 +9,6 @@ class LocalJSON(LocalTarget):
             return json.load(f)
 
     def save(self, data, **kwargs):
+        self.makedirs()
         with open(self.path, 'w') as f:
             json.dump(data, f, **kwargs)
